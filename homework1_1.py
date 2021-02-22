@@ -108,14 +108,20 @@ class Reviewer(Mentor):
 def average_students_course_score(course: str, students: list):
     average_course_score = []
     for student in students:
-        for each in student.grades[course]:
-            average_course_score.append(each)
-    return sum(average_course_score) / len(average_course_score)
+        if course in student.grades:
+            for each in student.grades[course]:
+                average_course_score.append(each)
+    if average_course_score:
+        return sum(average_course_score) / len(average_course_score)
+    return 0
 
 
 def average_lecturers_course_score(course: str, lecturers: list):
     average_course_score = []
     for lecturer in lecturers:
-        for each in lecturer.grade_dict[course]:
-            average_course_score.append(each)
-    return sum(average_course_score) / len(average_course_score)
+        if course in lecturer.grade_dict:
+            for each in lecturer.grade_dict[course]:
+                average_course_score.append(each)
+    if average_course_score:
+        return sum(average_course_score) / len(average_course_score)
+    return 0

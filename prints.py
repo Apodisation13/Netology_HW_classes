@@ -38,6 +38,7 @@ student_1.rate_lecturer(lecturer_2, 'Python', 10)
 student_1.rate_lecturer(lecturer_2, 'Python', 10)
 student_2.rate_lecturer(lecturer_2, 'Python', 9)  # Билл снизил оценку Илону за что-то...
 student_2.rate_lecturer(lecturer_2, 'Python', 10)
+student_2.rate_lecturer(lecturer_1, 'Git', 3)
 
 print(student_1.rate_l)  # бесполезная вещь - таких оценок наставил студент1
 print(student_2.rate_l)  # а таких студент2
