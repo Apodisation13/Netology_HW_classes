@@ -7,8 +7,9 @@ class Student:
         self.gender = gender
         self.finished_courses = []
         self.courses_in_progress = []
-        self.grades = {}
-        self.rate_l = {}
+        self.grades = {}  # оценки за ДЗ,словарь вида курс: список оценок
+        self.rate_l = {}  # студент ставит оценки преподу за лекцию, словарь типа курс: список оценок
+        self.average_hw = 0  # средняя оценка ЗА ВСЕ дз у студента
         # Student.number.append(self)  # посчитать количество созданных объектов, для тренировки
 
     def rate_lecturer(self, lecturer, course, grade):
@@ -21,6 +22,7 @@ class Student:
                     self.rate_l[course] += [grade]
                 else:
                     self.rate_l[course] = [grade]
+
                 if course in lecturer.grade_dict:
                     lecturer.grade_dict[course] += [grade]
                 else:
@@ -30,6 +32,23 @@ class Student:
                 print("Оценка только от 1 до 10")
         else:
             print('Ошибкааа')
+
+    def calc_average_hw_score(self):
+        grades_list = []
+        for value in self.grades.values():
+            for each in value:
+                grades_list.append(each)
+        if grades_list:
+            self.average_hw = sum(grades_list) / len(grades_list)
+
+    def __str__(self):
+        self.calc_average_hw_score()
+        t1 = ', '.join(_ for _ in self.courses_in_progress)
+        t2 = ', '.join(_ for _ in self.finished_courses)
+        return f'\nИмя: {self.name}\nФамилия: {self.surname}\n' \
+               f'Средняя оценка за домашние задания: {"{:.1f}".format(self.average_hw)}\n' \
+               f'Курсы в процессе изучения: {t1}\n' \
+               f'Завершённые курсы: {t2}'
 
 
 class Mentor:
@@ -47,8 +66,8 @@ class Lecturer(Mentor):
 
     def __str__(self):
         self.calc_grade_score()
-        return f'Имя: {self.name}\nФамилия: {self.surname}\n' \
-               f'Средняя оценка за лекции: {self.average_lection_score}'
+        return f'\nИмя: {self.name}\nФамилия: {self.surname}\n' \
+               f'Средняя оценка за лекции: {"{:.1f}".format(self.average_lection_score)}'
 
     def calc_grade_score(self):
         grades_list = []
@@ -64,19 +83,22 @@ class Reviewer(Mentor):
         if isinstance(student, Student) \
                 and course in self.courses_attached \
                 and course in student.courses_in_progress:
+
             if course in student.grades:
                 student.grades[course] += [grade]
             else:
                 student.grades[course] = [grade]
+
         else:
             return 'Ошибка'
 
     def __str__(self):
-        return f'Имя: {self.name}\nФамилия: {self.surname}'
+        return f'\nИмя: {self.name}\nФамилия: {self.surname}'
 
 
 student_1 = Student('Ruoy', 'Eman', 'yet_unknown')
 student_1.courses_in_progress += ['Python']
+student_1.finished_courses += ['Git']
 student_2 = Student('Bill', 'Gates', 'female')
 student_2.courses_in_progress += ['Python', 'Git']
 
@@ -107,3 +129,5 @@ print(student_2.rate_l)
 
 print(lecturer_1.grade_dict)
 print(lecturer_1)
+print(student_1)
+print(student_2)
