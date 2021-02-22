@@ -99,7 +99,7 @@ class Reviewer(Mentor):
                 student.grades[course] = [grade]
 
         else:
-            return 'Ошибка'
+            print('Ошибка')
 
     def __str__(self):
         return f'\nИмя: {self.name}\nФамилия: {self.surname}'
