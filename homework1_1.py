@@ -1,5 +1,5 @@
 class Student:
-    # number = []  # добавить все созданные экземпляры в один список
+    number = []  # добавить все созданные экземпляры в один список
 
     def __init__(self, name, surname, gender):
         self.name = name
@@ -7,10 +7,10 @@ class Student:
         self.gender = gender
         self.finished_courses = []
         self.courses_in_progress = []
-        self.grades = {}  # оценки за ДЗ,словарь вида курс: список оценок
-        self.rate_l = {}  # студент ставит оценки преподу за лекцию, словарь типа курс: список оценок
+        self.grades = {}  # оценки за ДЗ,словарь вида -- курс: список оценок
+        self.rate_l = {}  # список оценок студента, словарь типа -- курс: список оценок
         self.average_hw = 0  # средняя оценка ЗА ВСЕ дз у студента
-        # Student.number.append(self)  # посчитать количество созданных объектов, для тренировки
+        Student.number.append(self)  # посчитать количество созданных объектов, для тренировки
 
     def rate_lecturer(self, lecturer, course, grade):
         if isinstance(lecturer, Lecturer) \
@@ -50,6 +50,9 @@ class Student:
                f'Курсы в процессе изучения: {t1}\n' \
                f'Завершённые курсы: {t2}'
 
+    def __lt__(self, other):
+        return self.average_hw < other.average_hw
+
 
 class Mentor:
     def __init__(self, name, surname):
@@ -59,10 +62,13 @@ class Mentor:
 
 
 class Lecturer(Mentor):
+    number = []
+
     def __init__(self, name, surname):
         super().__init__(name, surname)
-        self.grade_dict = {}
-        self.average_lection_score = 0
+        self.grade_dict = {}  # это оценки, который получил препод в формате курс: список оценок
+        self.average_lection_score = 0  # это среднее значение ЗА ВСЕ его лекции
+        self.number.append(self)  # количество экземляров класса
 
     def __str__(self):
         self.calc_grade_score()
@@ -76,6 +82,9 @@ class Lecturer(Mentor):
                 grades_list.append(each)
         if grades_list:
             self.average_lection_score = sum(grades_list) / len(grades_list)
+
+    def __lt__(self, other):
+        return self.average_lection_score < other.average_lection_score
 
 
 class Reviewer(Mentor):
@@ -96,38 +105,17 @@ class Reviewer(Mentor):
         return f'\nИмя: {self.name}\nФамилия: {self.surname}'
 
 
-student_1 = Student('Ruoy', 'Eman', 'yet_unknown')
-student_1.courses_in_progress += ['Python']
-student_1.finished_courses += ['Git']
-student_2 = Student('Bill', 'Gates', 'female')
-student_2.courses_in_progress += ['Python', 'Git']
+def average_students_course_score(course: str, students: list):
+    average_course_score = []
+    for student in students:
+        for each in student.grades[course]:
+            average_course_score.append(each)
+    return sum(average_course_score) / len(average_course_score)
 
-mentor_1 = Mentor('Some', 'Buddy')
-mentor_1.courses_attached += ['Python']
 
-reviwer_1 = Reviewer("Bruce", "Wayne")
-reviwer_1.courses_attached += ['Python']
-
-# lecturer_1 = Lecturer("Elon", "Musk")
-# lecturer_1.courses_attached += ['Python']
-lecturer_1 = Lecturer("Вася", "Пупкин")
-lecturer_1.courses_attached += ["Python", "Git"]
-
-reviwer_1.rate_hw(student_1, 'Python', 7)
-reviwer_1.rate_hw(student_1, 'Python', 4)
-reviwer_1.rate_hw(student_1, 'Python', 9)
-print(student_1.grades)
-
-student_1.rate_lecturer(lecturer_1, 'Python', 10)
-student_1.rate_lecturer(lecturer_1, 'Python', 9)
-student_1.rate_lecturer(lecturer_1, 'Python', 9)
-student_2.rate_lecturer(lecturer_1, 'Python', 2)
-student_2.rate_lecturer(lecturer_1, 'Git', 1)
-
-print(student_1.rate_l)
-print(student_2.rate_l)
-
-print(lecturer_1.grade_dict)
-print(lecturer_1)
-print(student_1)
-print(student_2)
+def average_lecturers_course_score(course: str, lecturers: list):
+    average_course_score = []
+    for lecturer in lecturers:
+        for each in lecturer.grade_dict[course]:
+            average_course_score.append(each)
+    return sum(average_course_score) / len(average_course_score)
