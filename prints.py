@@ -6,12 +6,17 @@ student_1.courses_in_progress += ['Python']
 student_1.finished_courses += ['Git']
 student_2 = Student('Bill', 'Gates', 'simply_genius')
 student_2.courses_in_progress += ['Python', 'Git']
+student_2.finished_courses += ['How To Be a Genius']
 
 mentor_1 = Mentor('Some', 'Buddy')
 mentor_1.courses_attached += ['Python']
+mentor_2 = Mentor("Any", "Body")
+mentor_2.courses_attached += ['Git']
 
 reviewer_1 = Reviewer("Bruce", "Wayne")
 reviewer_1.courses_attached += ['Python']
+reviewer_2 = Reviewer("Clark", "Kent")
+reviewer_2.courses_attached += ['Git']
 
 lecturer_1 = Lecturer("Вася", "Пупкин")
 lecturer_1.courses_attached += ["Python", "Git"]
@@ -20,12 +25,12 @@ lecturer_2.courses_attached += ['Python']
 
 reviewer_1.rate_hw(student_1, 'Python', 2)
 reviewer_1.rate_hw(student_1, 'Python', 3)
-reviewer_1.rate_hw(student_1, 'Python', 2)  # первая ошибка в консоли
-print(student_1.grades)
+reviewer_1.rate_hw(student_1, 'Python', 2)
+print(f'Оценки студента1 за ДЗ {student_1.grades}')
 reviewer_1.rate_hw(student_2, "Python", 10)
 reviewer_1.rate_hw(student_2, "Python", 10)
-reviewer_1.rate_hw(student_2, "Painting", 1)  # Билл не записан на курсы рисования... ошибка
-print(student_2.grades)
+reviewer_1.rate_hw(student_2, "Painting", 1)  # Билл не записан на курсы рисования... в консоли ошибка
+print(f'Оценки студента2 за ДЗ {student_2.grades}')
 
 student_1.rate_lecturer(lecturer_1, 'Python', 8)
 student_1.rate_lecturer(lecturer_1, 'Python', 2)
@@ -44,13 +49,16 @@ student_2.rate_lecturer(lecturer_2, 'Git', 3)  # эта оценка не пой
 print(student_1.rate_l)  # бесполезная вещь - список таких оценок наставил студент1 8 2 3 10 10 10
 print(student_2.rate_l)  # а таких студент2 питон - 2 9 10, гит 1 3, ещё один 3 не вошёл
 
-print(lecturer_1.grade_dict)  # такие оценки получил препод Вася
-print(lecturer_2.grade_dict)  # такие оценки получил Илон Маск
+print(f'\nОценки препода1 {lecturer_1.grade_dict}')  # такие оценки получил препод Вася
+print(f'Оценки препода2 {lecturer_2.grade_dict}')  # такие оценки получил Илон Маск
 print(lecturer_1)
+lecturer_2.calc_grade_score()  # иначе оценки Илону не посчитаются.
+print(reviewer_2)
 print(student_1)
 print(student_2)
+print()
 print(student_1.average_hw < student_2.average_hw)  # True, у Билла дела обстоят гораздо лучше...
-print(lecturer_1.average_lection_score < lecturer_2.average_lection_score)  # False - неправда, Илон лучше!
+print(lecturer_1.average_lection_score > lecturer_2.average_lection_score)  # False - неправда, Илон лучше!
 
 a = average_students_course_score('Python', Student.number)
 print(a)  # 2+3+2 у первого +10+10 = 27/5 = 5.4

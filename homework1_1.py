@@ -8,9 +8,9 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}  # оценки за ДЗ,словарь вида -- курс: список оценок
-        self.rate_l = {}  # список оценок студента, словарь типа -- курс: список оценок
+        self.rate_l = {}  # оценки лектору от студента, словарь вида -- курс: список оценок
         self.average_hw = 0  # средняя оценка ЗА ВСЕ дз у студента
-        Student.number.append(self)  # посчитать количество созданных объектов, для тренировки
+        Student.number.append(self)  # посчитать количество созданных объектов
 
     def rate_lecturer(self, lecturer, course, grade):
         if isinstance(lecturer, Lecturer) \
@@ -68,7 +68,7 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.grade_dict = {}  # это оценки, который получил препод в формате курс: список оценок
         self.average_lection_score = 0  # это среднее значение ЗА ВСЕ его лекции
-        self.number.append(self)  # количество экземляров класса
+        self.number.append(self)  # список всех экземляров класса
 
     def __str__(self):
         self.calc_grade_score()
