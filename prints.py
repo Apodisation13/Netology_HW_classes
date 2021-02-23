@@ -46,8 +46,8 @@ student_2.rate_lecturer(lecturer_2, 'Python', 9)  # Билл снизил оце
 student_2.rate_lecturer(lecturer_2, 'Python', 10)
 student_2.rate_lecturer(lecturer_2, 'Git', 3)  # эта оценка не пойдет в расчёт, ибо Илон не вёл Git, ошибкааа
 
-print(student_1.rate_l)  # бесполезная вещь - список таких оценок наставил студент1 8 2 3 10 10 10
-print(student_2.rate_l)  # а таких студент2 питон - 2 9 10, гит 1 3, ещё один 3 не вошёл
+print(student_1.rate_l)  # cписок таких оценок наставил студент1: 8 2 3 10 10 10
+print(student_2.rate_l)  # а таких студент2: питон - 2 9 10, гит 1 3, ещё один 3 не вошёл
 
 print(f'\nОценки препода1 {lecturer_1.grade_dict}')  # такие оценки получил препод Вася
 print(f'Оценки препода2 {lecturer_2.grade_dict}')  # такие оценки получил Илон Маск
